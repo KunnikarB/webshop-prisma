@@ -4,6 +4,8 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 const app = express();
+app.use(express.json());
+
 const PORT = 3000;
 
 // ------------------------
@@ -65,6 +67,20 @@ app.patch("/products/:productId", async (req, res) => {
 
 }); 
 
+// ------------------------
+// DELETE /orders/:orderId -> delete order (req.params)
+// ------------------------
+app.delete("/orders/:orderId", async (req, res) => {
+  try {
+
+    await prisma.orderItem.deleteMany({ where: { orderId: Number(req.params.orderId) } });
+
+    const deletedOrder = await prisma.order.delete({ where: { id: Number(req.params.orderId) } });
+    res.json({ message: "Order deleted", order: deletedOrder });
+  } catch (error) {
+    res.status(500).send(error instanceof Error ? error.message : "Unknown error");
+  }
+});
 
 app.listen(PORT, () => {
   console.log(` 🚀 Server is running at http://localhost:${PORT}`);
