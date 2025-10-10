@@ -1,4 +1,5 @@
 # Webshop API with Express & Prisma
+- A minimal webshop backend built with Express, TypeScript, and Prisma, connected to PostgreSQL. Supports CRUD operations for products and orders, with relational handling for customers, categories, and order items.
 
 ## ⚒️ Features
 
@@ -8,6 +9,22 @@
 
 - Seed script to populate initial data.
 --- 
+### Getting Started
+- Clone
+  - https://github.com/KunnikarB/webshop-prisma.git
+- Install dependencies
+  - npm install
+- Create a .env file with your PostgreSQL database URL:
+  - DATABASE_URL="postgresql://user:password@localhost:5432/mydb?schema=public"
+- Generate Prisma client and migrate database
+  - npx prisma generate
+  - npx prisma migrate dev --name init
+- Run server
+  - npm run dev
+  - Server runs at http://localhost:3000
+
+
+---
 ### Express routes demonstrating:
   - `req.query` → GET / filter
 
