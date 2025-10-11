@@ -12,7 +12,6 @@ export interface Product {
   categoryId: number;
   category: { name: string };
   orderItems: string[];
-  createdAt: string;
 }
 
 const API_URL = 'http://localhost:3000/products';
@@ -43,11 +42,9 @@ export default function App() {
   }) => {
     setLoading(true);
     try {
-      // Send POST and get the new product back
       const res = await axios.post<Product>(API_URL, data);
       const newProduct = res.data;
 
-      // ✅ Update state with the new product
       setProducts((prev) => [...prev, newProduct]);
 
       toast.success('Product added successfully!');

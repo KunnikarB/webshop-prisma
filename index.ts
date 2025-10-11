@@ -28,7 +28,7 @@ app.post('/products', async (req, res) => {
         stock: parseInt(stock),
         category: {
           connect: { id: Number(categoryId) },
-        },
+        }
       },
       include: { category: true },
     });
@@ -41,11 +41,13 @@ app.post('/products', async (req, res) => {
 });
 
 // ------------------------
-// GET /products -> filter products (req.query)
-// /products?category=Electronics
-// /products?minPrice=10&maxPrice=100
+// GET /products -> Fetch or filter products
+// Examples:
+//   /products
+//   /products?category=Electronics
+//   /products?minPrice=10&maxPrice=100
 // ------------------------
- app.get('/products', async (req, res) => {
+app.get('/products', async (req, res) => {
   try {
     const { category, minPrice, maxPrice } = req.query;
 
@@ -55,16 +57,18 @@ app.post('/products', async (req, res) => {
           gte: minPrice ? Number(minPrice) : undefined,
           lte: maxPrice ? Number(maxPrice) : undefined,
         },
-        category: category ? { name: { equals: String(category) } } : undefined,
+        category: category
+          ? { name: { equals: String(category), mode: 'insensitive' } }
+          : undefined,
       },
       include: { category: true },
+      orderBy: { id: 'desc' },
     });
 
     res.json(products);
-  } catch (error) {
-    res
-      .status(500)
-      .send(error instanceof Error ? error.message : 'Unknown error');
+  } catch (error: any) {
+    console.error('Error fetching products:', error);
+    res.status(500).json({ error: error.message });
   }
 });
 
