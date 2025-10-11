@@ -1,5 +1,20 @@
-# Webshop API with Express & Prisma
+#  🛒 Webshop with Prisma, Express, and React (Vite + TypeScript)
 - A minimal webshop backend built with Express, TypeScript, and Prisma, connected to PostgreSQL. Supports CRUD operations for products and orders, with relational handling for customers, categories, and order items.
+- It allows you to create and list products with real-time updates on the frontend.
+  <img width="494" height="916" alt="Screenshot 2025-10-11 at 07 27 41" src="https://github.com/user-attachments/assets/23d2976f-7e57-4dfc-8684-06c1c114100a" />
+
+
+## 🚀 Tech Stack
+- Backend
+  - Node.js + Express
+  - Prisma ORM
+  - PostgreSQL
+
+- Frontend
+  - React (Vite + TypeScript)
+  - Axios for API calls
+  - Tailwind CSS for styling
+  - React Hot Toast for notifications
 
 ## ⚒️ Features
 
@@ -13,6 +28,8 @@
 - Clone
   - https://github.com/KunnikarB/webshop-prisma.git
 - Install dependencies
+  - npm install
+- Install frontend dependencies
   - npm install
 - Create a .env file with your PostgreSQL database URL:
   - DATABASE_URL="postgresql://user:password@localhost:5432/mydb?schema=public"
