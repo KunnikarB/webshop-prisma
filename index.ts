@@ -1,9 +1,11 @@
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
+import cors from 'cors';
 
 const prisma = new PrismaClient();
-
 const app = express();
+
+app.use(cors( { origin: "http://localhost:5173" }));
 app.use(express.json());
 
 const PORT = 3000;
@@ -11,12 +13,30 @@ const PORT = 3000;
 // ------------------------
 // POST /products -> create product (req.body)
 // ------------------------
-app.post("/products", async (req, res) => {
+app.post('/products', async (req, res) => {
   try {
-    const newProduct = await prisma.product.create({ data: req.body });
-    res.json(newProduct);
-  } catch (error) {
-    res.status(500).send(error instanceof Error ? error.message : "Unknown error");
+    const { name, price, stock, categoryId } = req.body;
+
+    if (!name || !price || !stock || !categoryId) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    const product = await prisma.product.create({
+      data: {
+        name,
+        price: parseFloat(price),
+        stock: parseInt(stock),
+        category: {
+          connect: { id: Number(categoryId) },
+        },
+      },
+      include: { category: true },
+    });
+
+    res.status(201).json(product);
+  } catch (error: any) {
+    console.error('Error adding product:', error);
+    res.status(500).json({ error: error.message });
   }
 });
 
