@@ -21,18 +21,18 @@ export default function App() {
   const [loading, setLoading] = useState(false);
 
   // Fetch products
-  useEffect(() => {
-    async function fetchProducts() {
-      try {
-        const res = await axios.get<Product[]>(API_URL);
-        setProducts(res.data);
-      } catch {
-        toast.error('Failed to fetch products');
-      }
+  const fetchProducts = async () => {
+    try {
+      const res = await axios.get<Product[]>(API_URL);
+      setProducts(res.data);
+    } catch {
+      toast.error('Failed to fetch products');
     }
+  };
+
+  useEffect(() => {
     fetchProducts();
   }, []);
-
 
   const addProduct = async (data: {
     name: string;
@@ -55,6 +55,43 @@ export default function App() {
     }
   };
 
+  // Update product
+  const updateProduct = async (
+    id: number,
+    data: Partial<{
+      name: string;
+      price: number;
+      stock: number;
+      categoryId: number;
+    }>
+  ) => {
+    setLoading(true);
+    try {
+      const res = await axios.patch<Product>(`${API_URL}/${id}`, data);
+      setProducts((prev) => prev.map((p) => (p.id === id ? res.data : p)));
+      toast.success('Product updated!');
+    } catch (error) {
+      console.error(error);
+      toast.error('Failed to update product');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Delete product
+  const deleteProduct = async (id: number) => {
+    setLoading(true);
+    try {
+      await axios.delete(`${API_URL}/${id}`);
+      setProducts((prev) => prev.filter((p) => p.id !== id));
+      toast.success('Product deleted!');
+    } catch {
+      toast.error('Failed to delete product');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-pink-50 p-6 font-sans">
       <Toaster position="top-right" />
@@ -64,7 +101,12 @@ export default function App() {
 
       <AddProductForm addProduct={addProduct} loading={loading} />
 
-      <ProductsList products={products} />
+      <ProductsList
+        products={products}
+        onUpdate={updateProduct}
+        onDelete={deleteProduct}
+        loading={loading}
+      />
     </div>
   );
 }

@@ -73,23 +73,49 @@ app.get('/products', async (req, res) => {
 });
 
 // Update product by id (req.params) 
-app.patch("/products/:productId", async (req, res) => { 
+app.patch('/products/:productId', async (req, res) => {
+  try {
+    const { productId } = req.params;
 
-  try { 
+    const updated = await prisma.product.update({
+      where: { id: Number(productId) },
+      data: {
+        name: req.body.name,
+        price: req.body.price ? parseFloat(req.body.price) : undefined,
+        stock: req.body.stock ? parseInt(req.body.stock) : undefined,
+        categoryId: req.body.categoryId
+          ? Number(req.body.categoryId)
+          : undefined,
+      },
+      include: { category: true }, 
+    });
 
-    const updated = await prisma.product.update({ 
+    res.json(updated);
+  } catch (error: any) {
+    console.error('Error updating product:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
 
-      where: { id: Number(req.params.productId) }, 
+// ------------------------
+// DELETE /products/:productId -> delete a product
+// ------------------------
+app.delete('/products/:productId', async (req, res) => {
+  try {
+    const { productId } = req.params;
 
-      data: req.body 
+    await prisma.orderItem.deleteMany({ where: { productId: Number(productId) } });
 
-    }); 
+    const deletedProduct = await prisma.product.delete({
+      where: { id: Number(productId) },
+    });
 
-    res.json(updated); 
-
-  } catch (error) { res.status(500).send(error instanceof Error ? error.message : "Unknown error"); } 
-
-}); 
+    res.json({ message: 'Product deleted successfully', product: deletedProduct });
+  } catch (error: any) {
+    console.error('Error deleting product:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
 
 // ------------------------
 // DELETE /orders/:orderId -> delete order (req.params)
@@ -105,6 +131,7 @@ app.delete("/orders/:orderId", async (req, res) => {
     res.status(500).send(error instanceof Error ? error.message : "Unknown error");
   }
 });
+
 
 app.listen(PORT, () => {
   console.log(` 🚀 Server is running at http://localhost:${PORT}`);
