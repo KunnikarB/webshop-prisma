@@ -7,7 +7,6 @@ interface Props {
 
 export default function ProductsList({ products }: Props) {
   return (
-    
     <ul className="space-y-4">
       {products.map((p) => (
         <li
@@ -20,7 +19,7 @@ export default function ProductsList({ products }: Props) {
           <span>Stock: {p.stock}</span>
           <span>Category ID: {p.categoryId}</span>
           <span>Category: {p.category.name}</span>
-          <span>Created At: {new Date(p.createdAt).toLocaleDateString()}</span>
+          
         </li>
       ))}
     </ul>

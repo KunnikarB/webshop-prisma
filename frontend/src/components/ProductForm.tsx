@@ -24,7 +24,6 @@ export function AddProductForm({ addProduct, loading }: Props) {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    // ✅ Send only the required fields
     const payload = {
       name: form.name,
       price: Number(form.price),
