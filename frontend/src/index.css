@@ -9,7 +9,7 @@
     --card-foreground: 0 0% 20%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 20%;
-    --primary: 330 100% 50%; /* Vibrant Hot Pink #FF0080 */
+    --primary: hotpink; /* Vibrant Hot Pink #FF0080 */
     --primary-foreground: 0 0% 100%; /* White text on hot pink */
     --secondary: 0 0% 20%; /* Dark text/elements */
     --secondary-foreground: 0 0% 100%;
@@ -64,7 +64,10 @@
   border: 0;
   box-shadow: 0 0 0 1px rgb(243 244 246 / 0.5);
   border-radius: 0.5rem;
-  background-color: white;
+  background-color: hotpink;
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
 }
 
 .login-input {
@@ -72,12 +75,12 @@
   padding: 0.5rem 1rem;
   font-size: 1rem;
   border: 1px solid rgb(209 213 219);
-  color: rgb(17 24 39);
+  color: hsl(var(--primary-foreground));
   background-color: white;
 }
 
 .login-input::placeholder {
-  color: rgb(107 114 128);
+  color: rgb(216, 79, 152);
 }
 
 .login-input:focus {
@@ -90,6 +93,9 @@
   height: 3rem;
   font-size: 1rem;
   font-weight: 600;
+  color: white;
+  background-color: black;
+
 }
 
 .login-toggle-button {
