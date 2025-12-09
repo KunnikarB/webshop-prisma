@@ -57,14 +57,14 @@ const HomePage = () => {
                 </p>
                 <div className="flex flex-wrap gap-4">
                   <Link to="/shop">
-                    <Button className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg">
+                    <Button className="bg-pink-400 hover:opacity-90 text-white px-8 py-6 text-lg">
                       Start Shopping
                     </Button>
                   </Link>
                   <Link to="/about">
                     <Button
                       variant="outline"
-                      className="border-primary text-primary hover:bg-primary/5 dark:hover:bg-primary/20 px-8 py-6 text-lg"
+                      className="border-pink-400 text-white hover:bg-primary/5 dark:hover:bg-pink-300 px-8 py-6 text-lg"
                     >
                       Learn More
                     </Button>
