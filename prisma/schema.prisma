@@ -24,6 +24,8 @@ model Customer {
 model Product {
   id          Int         @id @default(autoincrement())
   name        String
+  description String?     @default("")
+  image       String?     @default("")
   price       Float
   stock       Int
   categoryId  Int
@@ -38,18 +40,31 @@ model Category {
 }
 
 model Order {
-  id          Int         @id @default(autoincrement())
-  orderDate   DateTime    @default(now())
-  customerId  Int
-  customer    Customer    @relation(fields: [customerId], references: [id])
-  orderItems  OrderItem[] 
+  id              Int         @id @default(autoincrement())
+  orderDate       DateTime    @default(now())
+  customerId      Int
+  address         String?     // Shipping address
+  city            String?     // City
+  zipCode         String?     // Zip/Postal code
+  country         String?     // Country
+  subtotal        Float       @default(0) // Subtotal before shipping
+  shippingCost    Float       @default(0) // Shipping cost
+  tax             Float       @default(0) // Tax amount (optional)
+  totalPrice      Float       @default(0) // Total price (subtotal + shipping + tax)
+  customer        Customer    @relation(fields: [customerId], references: [id])
+  orderItems      OrderItem[] 
 }
 
 model OrderItem {
-  id         Int      @id @default(autoincrement())
-  orderId    Int
-  productId  Int
-  quantity   Int
-  order      Order    @relation(fields: [orderId], references: [id])
-  product    Product  @relation(fields: [productId], references: [id])
+  id            Int      @id @default(autoincrement())
+  orderId       Int
+  productId     Int
+  quantity      Int
+  priceAtTime   Float?   // Price of product when order was placed
+  totalPrice    Float?   // Total price for this item (quantity * priceAtTime)
+  shippingCost  Float    @default(0) // Shipping share allocated to this item
+  taxAmount     Float    @default(0) // Tax share allocated to this item
+  totalWithFees Float    @default(0) // Item total including shipping + tax share
+  order         Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product       Product  @relation(fields: [productId], references: [id])
 }

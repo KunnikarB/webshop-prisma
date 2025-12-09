@@ -1,70 +1,58 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Toaster, toast } from 'react-hot-toast';
-import { AddProductForm } from './components/ProductForm';
-import ProductsList from './components/ProductsList';
+// ...existing code...
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Toaster } from './components/ui/toaster';
+// @ts-expect-error No type declaration for CartContext.jsx
+import { CartProvider } from './contexts/CartContext';
+// @ts-expect-error No type declaration for FirebaseAuthContext.jsx
+import { FirebaseAuthProvider } from './contexts/FirebaseAuthContext';
+// @ts-expect-error No type declaration for Navbar.jsx
+import Navbar from './components/Navbar';
+// @ts-expect-error No type declaration for Footer.jsx
+import Footer from './components/Footer';
+// @ts-expect-error No type declaration for HomePage.jsx
+import HomePage from './pages/HomePage';
+// @ts-expect-error No type declaration for ShopPage.jsx
+import ShopPage from './pages/ShopPage';
+// @ts-expect-error No type declaration for ProductPage.jsx
+import ProductPage from './pages/ProductPage';
+// @ts-expect-error No type declaration for CartPage.jsx
+import CartPage from './pages/CartPage';
+// @ts-expect-error No type declaration for CheckoutPage.jsx
+import CheckoutPage from './pages/CheckoutPage';
+// @ts-expect-error No type declaration for SuccessPage.jsx
+import SuccessPage from './pages/SuccessPage';
+// @ts-expect-error No type declaration for AboutPage.jsx
+import AboutPage from './pages/AboutPage';
+// @ts-expect-error No type declaration for ContactPage.jsx
+import ContactPage from './pages/ContactPage';
+// @ts-expect-error No type declaration for AdminPage.jsx
+import AdminPage from './pages/AdminPage';
 
-export interface Product {
-  id: number;
-  name: string;
-  price: number;
-  stock: number;
-  categoryId: number;
-  category: { name: string };
-  orderItems: string[];
-}
-
-const API_URL = 'http://localhost:3000/products';
-
-export default function App() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(false);
-
-  // Fetch products
-  useEffect(() => {
-    async function fetchProducts() {
-      try {
-        const res = await axios.get<Product[]>(API_URL);
-        setProducts(res.data);
-      } catch {
-        toast.error('Failed to fetch products');
-      }
-    }
-    fetchProducts();
-  }, []);
-
-
-  const addProduct = async (data: {
-    name: string;
-    price: number;
-    stock: number;
-    categoryId: number;
-  }) => {
-    setLoading(true);
-    try {
-      const res = await axios.post<Product>(API_URL, data);
-      const newProduct = res.data;
-
-      setProducts((prev) => [...prev, newProduct]);
-
-      toast.success('Product added successfully!');
-    } catch {
-      toast.error('Failed to add product');
-    } finally {
-      setLoading(false);
-    }
-  };
-
+function App() {
   return (
-    <div className="min-h-screen bg-pink-50 p-6 font-sans">
-      <Toaster position="top-right" />
-      <h1 className="text-3xl font-bold text-primary mb-6">
-        Product Dashboard
-      </h1>
-
-      <AddProductForm addProduct={addProduct} loading={loading} />
-
-      <ProductsList products={products} />
-    </div>
+    <Router>
+      <FirebaseAuthProvider>
+        <CartProvider>
+          <div className="min-h-screen bg-background text-foreground">
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/shop" element={<ShopPage />} />
+              <Route path="/product/:id" element={<ProductPage />} />
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/checkout" element={<CheckoutPage />} />
+              <Route path="/success" element={<SuccessPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/admin" element={<AdminPage />} />
+            </Routes>
+            <Footer />
+            <Toaster />
+          </div>
+        </CartProvider>
+      </FirebaseAuthProvider>
+    </Router>
   );
 }
+
+export default App;

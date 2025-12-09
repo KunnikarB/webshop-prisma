@@ -1,0 +1,8 @@
+orderId,orderDate,customerEmail,customerName,address,city,zipCode,country,subtotal,shippingCost,tax,orderTotal,productId,productName,quantity,priceAtTime,itemSubtotal,itemShipping,itemTax,itemTotalWithFees
+7,2025-12-09T14:57:29.001Z,kunnikarboon@gmail.com,Kunnikar Boonbunlu,Pontonjargatan 5,Stockholm,11222,Sweden,1050,15,84,1149,14,Classic Unisex Pullover Hoodie,3,350,1050,15,84,1149
+6,2025-12-09T14:50:13.144Z,kunnikarboon@gmail.com,Kunnikar Boonbunlu,Pontonjargatan 5,Stockholm,11222,China,700,15,56,771,14,Classic Unisex Pullover Hoodie,2,350,700,0,0,0
+5,2025-12-09T14:46:33.487Z,kunnikarboon@gmail.com,Kunnikar Boonbunlu,Pontonjargatan 5,Stockholm,11222,Sweden,700,15,56,771,14,Classic Unisex Pullover Hoodie,2,350,700,0,0,0
+4,2025-12-09T14:42:02.736Z,thomas@gmail.com,Thmas Falck,Pontonjargatan 5,Stockholm,11222,Sweden,1050,15,84,1149,14,Classic Unisex Pullover Hoodie,3,350,1050,0,0,0
+3,2025-12-09T14:37:05.116Z,kunnikarboon@gmail.com,Kunnikar Boonbunlu,Pontonjargatan 5,Stockholm,11222,Sweden,0,0,0,0,14,Classic Unisex Pullover Hoodie,2,350,0,0,0,0
+2,2025-12-09T14:30:39.102Z,kunnikarboon@gmail.com,Kunnikar Boonbunlu,Pontonjargatan 5,Stockholm,11222,Sweden,0,0,0,0,14,Classic Unisex Pullover Hoodie,1,350,0,0,0,0
+1,2025-12-09T14:23:54.948Z,kunnikarboon@gmail.com,Kunnikar Boonbunlu,,,,,0,0,0,0,14,Classic Unisex Pullover Hoodie,1,0,0,0,0,0
